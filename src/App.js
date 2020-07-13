@@ -1,21 +1,23 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import ConatctForm from './components/conactForm/ContactForm';
 import ContactList from './components/contactList/ContactList';
 import Filter from './components/filter/Filter';
 import styles from './App.css';
 import { Logo } from './components/logo/Logo';
 import themeAction from "./redux/theme/themeAction"
-import themeConfig from "./components/services/themeConfig"
-import { connect } from 'react-redux';
+import themeSwitch from "./services/themeSwitch"
 
 
 const App = ({theme, toggleTheme}) => {
+  // console.log(theme)
+  // console.log(themeSwitch)
   return (
     <div
-    // style={{ 
-    //   color: themeConfig[theme].fontColor, 
-    //   background: themeConfig[theme].bodybg,
-    //  }}
+    style={{
+      color: themeSwitch[theme].fontColor,
+      background: themeSwitch[theme].bodybg,
+    }}
     >
       <div>
         <>
@@ -37,14 +39,13 @@ const App = ({theme, toggleTheme}) => {
 
 const mapStateToProps = (state) => {
   return {
-    theme: state.themeRoot,
+    theme: state.theme,
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    toggleTheme: () => dispatch(themeAction.changeTheme),
-  }
+const mapDispatchToProps = {
+  toggleTheme: themeAction.changeTheme,
 };
+
 
 export default connect(mapStateToProps, mapDispatchToProps )(App);

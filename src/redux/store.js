@@ -9,7 +9,6 @@ const contacts = [
 ];
 
 
-
 export const store = createStore(
   rootReducer,
   { contactsRoot: { contacts } },

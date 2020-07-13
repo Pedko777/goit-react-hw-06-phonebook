@@ -1,4 +1,4 @@
-const themeConfig = {
+const themeSwitch = {
     light: {
       headerBg: '#F7B30C',
       fontColor: 'black',
@@ -11,4 +11,4 @@ const themeConfig = {
     },
   };
   
-  export default themeConfig;
+  export default themeSwitch;

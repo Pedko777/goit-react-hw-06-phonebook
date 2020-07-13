@@ -1,7 +1,7 @@
-import ActionTypes from './themeTypes';
+import themeTypes from './themeTypes';
 
 const changeTheme = (theme) => ({
-  type: ActionTypes.CHANGE_THEME,
+  type: themeTypes.CHANGE_THEME,
   payload: {
     theme,
   },
