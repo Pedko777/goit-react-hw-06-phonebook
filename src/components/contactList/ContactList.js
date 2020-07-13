@@ -1,31 +1,27 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import styles from './contactList.module.css';
 import ContactListItem from '../contactListItem/ContactListItem';
+import { connect } from 'react-redux';
 
-const ContactList = ({ contacts, onDeleteContact }) => {
+const ContactList = ({ contacts }) => {
+  console.log(contacts);
   return (
     <ul className={styles.contactList}>
       {contacts.map(contact => (
-        <ContactListItem
-          key={contact.id}
-          contact={contact}
-          onDeleteContact={onDeleteContact}
-        />
+        <ContactListItem key={contact.id} contact={contact} id={contact.id} />
       ))}
     </ul>
   );
 };
 
-ContactList.propTypes = {
-  contacts: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      number: PropTypes.string.isRequired,
-    }),
-  ),
-  onDeleteContact: PropTypes.func.isRequired,
+
+const mapStateToProps = state => {
+  const filter = state.contactsRoot.filter;
+  return {
+    contacts: state.contactsRoot.contacts.filter(contact =>
+      contact.name.toLowerCase().includes(filter.toLowerCase()),
+    ),
+  };
 };
 
-export default ContactList;
+export default connect(mapStateToProps)(ContactList);

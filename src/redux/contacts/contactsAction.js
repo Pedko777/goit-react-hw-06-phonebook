@@ -1,35 +1,45 @@
 import contactsTypes from './contactsTypes';
 import { v4 as uuidv4 } from 'uuid';
 
-
-const addContact = (text) => {
+const addContact = (name, number) => {
   return {
     type: contactsTypes.ADD_CONTACT,
-    
+
     payload: {
-      todo: {
+      contact: {
         id: uuidv4(),
-        text,
+        name: name,
+        number: number,
       },
     },
   };
 };
 
-const deleteContact = (idItemDelete) => {
+const deleteContact = idContactDelete => {
   return {
     type: contactsTypes.DELETE_CONTACT,
     payload: {
-      id: idItemDelete,
+      id: idContactDelete,
     },
   };
 };
 
-const changeContact = (idItemChange, changeText) => {
+const filtredContact = filter => {
+  return {
+    type: contactsTypes.FILTER_CONTACT,
+    payload: {
+      filter,
+    },
+  };
+};
+
+const changeContact = (idContactChange, changeName, changeNumber) => {
   return {
     type: contactsTypes.CHANGE_CONTACT,
     payload: {
-      id: idItemChange,
-      text: changeText,
+      id: idContactChange,
+      name: changeName,
+      number: changeNumber,
     },
   };
 };
@@ -54,4 +64,11 @@ const deleteIdEditContact = id => {
   };
 };
 
-export default { addContact, deleteIdEditContact, addIdEditContact, changeContact, deleteContact };
+export default {
+  addContact,
+  deleteContact,
+  filtredContact,
+  changeContact,
+  addIdEditContact,
+  deleteIdEditContact,
+};

@@ -1,98 +1,50 @@
-import React, { Component } from 'react';
+import React from 'react';
 import ConatctForm from './components/conactForm/ContactForm';
-import { v4 as uuidv4 } from 'uuid';
 import ContactList from './components/contactList/ContactList';
 import Filter from './components/filter/Filter';
 import styles from './App.css';
-import withTheme from "./components/hoc/withTheme"
 import { Logo } from './components/logo/Logo';
+import themeAction from "./redux/theme/themeAction"
+import themeConfig from "./components/services/themeConfig"
+import { connect } from 'react-redux';
 
-class App extends Component {
-  state = {
-    contacts: [
-      { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-      { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-      { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-      { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-    ],
-    filter: '',
-  };
 
-  addContact = (name, number) => {
-    const contact = {
-      id: uuidv4(),
-      name: name,
-      number: number,
-    };
-
-    this.state.contacts.find(
-      ({ name }) => name === contact.name && contact.name,
-    )
-      ? alert(`${contact.name} already exists`)
-      : this.setState(prevState => {
-          return {
-            contacts: [...prevState.contacts, contact],
-          };
-        });
-  };
-
-  deleteContact = id => {
-    this.setState(prevState => {
-      return {
-        contacts: prevState.contacts.filter(contact => contact.id !== id),
-      };
-    });
-  };
-
-  getFilteredContacts = () => {
-    const { contacts, filter } = this.state;
-
-    return contacts.filter(contact =>
-      contact.name.toLowerCase().includes(filter.toLowerCase()),
-    );
-  };
-
-  changeFilter = filter => {
-    this.setState({ filter });
-  };
-
-  getFilteredContacts = () => {
-    const { contacts, filter } = this.state;
-
-    return contacts.filter(contact =>
-      contact.name.toLowerCase().includes(filter.toLowerCase()),
-    );
-  };
-
-  render() {
-    const { contacts, filter } = this.state;
-    const { themeConfig, toggle } = this.props;
-    console.log(this.props)
-    
-    return (
-      <div
-        style={{ color: themeConfig.fontColor, background: themeConfig.bodybg }}
-      >
-        <div>
-          <>
-            <Logo />
-            <button onClick={toggle}>Change Theme</button>
-          </>
-        </div>
-
-        <ConatctForm onSubmit={this.addContact} />
-
-        <h2 className={styles.sectionTitle}>Contacts</h2>
-        {contacts.length > 1 && (
-          <Filter value={filter} onChangeFilter={this.changeFilter} />
-        )}
-        <ContactList
-          onDeleteContact={this.deleteContact}
-          contacts={this.getFilteredContacts()}
-        />
+const App = ({theme, toggleTheme}) => {
+  return (
+    <div
+    // style={{ 
+    //   color: themeConfig[theme].fontColor, 
+    //   background: themeConfig[theme].bodybg,
+    //  }}
+    >
+      <div>
+        <>
+          <Logo />
+          <button
+          onClick={toggleTheme}
+          >
+            Change Theme
+          </button>
+        </>
       </div>
-    );
-  }
-}
+      <ConatctForm />
+      <h2 className={styles.sectionTitle}>Contacts</h2>
+       <Filter />
+      <ContactList />
+    </div>
+  );
+};
 
-export default withTheme(App);
+const mapStateToProps = (state) => {
+  return {
+    theme: state.themeRoot,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    toggleTheme: () => dispatch(themeAction.changeTheme),
+  }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps )(App);

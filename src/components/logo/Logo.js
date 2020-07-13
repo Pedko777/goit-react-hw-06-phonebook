@@ -1,11 +1,11 @@
 import React from 'react';
 // import { CSSTransition } from 'react-transition-group';
-import styles from './logo.module.css';
+// import styles from './logo.module.css';
 
-const logoStyles = {
-  appear: styles.appear,
-  appearActive: styles.appearActive,
-};
+// const logoStyles = {
+//   appear: styles.appear,
+//   appearActive: styles.appearActive,
+// };
 
 export const Logo = () => {
   return (
